@@ -16,6 +16,16 @@ export const  fetchRoomsAction = () =>{
         })
     }
 }
+export const setRoomsAction = (rooms => {
+    return (dispatch) => {
+        dispatch({type: 'FETCH_ROOMS_SUCCESS', data: rooms});
+    }
+})
+export const socketAction = (socket) => {
+    return (dispatch) => {
+        dispatch({type: 'CREATE_SOCKET', payload: socket})
+    }
+}
 
 export const  fetchRoomForUpdateAction = (id) =>{
     return (dispatch) =>{

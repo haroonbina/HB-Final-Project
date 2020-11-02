@@ -96,6 +96,7 @@ const mapDispatchToProps = (dispatch) =>{
         fetchRooms: () => {dispatch(fetchRoomsAction())},
         deleteRoom: (id) => {dispatch(deleteRoomAction(id))},
         resetDeleteToast: () =>{dispatch({type: 'RESET_DELETE_ROOM_TOAST'})}, 
+        
     }
 }
 

@@ -1,5 +1,5 @@
 const express = require('express');
-const { fetchUser, fetchUserByID, changePassword } = require('../database/mySql');
+const { checkUser, fetchUserByID, changePassword } = require('../database/mySql');
 
 const router = express.Router();
 
@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/admins/login', (req, res) =>{
     const {userName, password} = req.body;
 
-    fetchUser(userName, password)
+    checkUser(userName, password)
     .then(result =>{
         if(result.length > 0){
             req.session.userId = result[0].id;

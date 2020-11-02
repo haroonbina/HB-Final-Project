@@ -38,9 +38,9 @@ router.get('/rooms/:id', (req, res) =>{
 
 router.put('/rooms/update', (req, res) =>{
 
-    const {id, roomName, deviceSn, maxPeopleNumber, currentPeopleNumber} = req.body;
+    const {id, roomName, deviceSn, maxPeopleNumber, currentPeopleNumber,  door_sound_alarm} = req.body;
 
-    updateRoom(id, roomName, deviceSn, maxPeopleNumber, currentPeopleNumber)
+    updateRoom(id, roomName, deviceSn, maxPeopleNumber, currentPeopleNumber, door_sound_alarm)
     .then(result =>{
         res.send();
     }).catch(error =>{

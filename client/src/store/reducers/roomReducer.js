@@ -1,3 +1,4 @@
+
 const initState = {
     rooms: {
         loading: false,
@@ -21,7 +22,8 @@ const initState = {
         loading: false,
         success: false,   
         error: ''
-    }
+    },
+    socket: null
 }
 
 const roomsReducer = (state = initState, action) =>{
@@ -33,6 +35,11 @@ const roomsReducer = (state = initState, action) =>{
                     ...state.rooms,
                     loading: true
                 }
+            }
+        case 'CREATE_SOCKET':
+            return {
+                ...state,
+                socket: action.payload
             }
         case 'FETCH_ROOMS_SUCCESS':
             return {

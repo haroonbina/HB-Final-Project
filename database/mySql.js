@@ -27,7 +27,7 @@ function connect() {
                 host:'localhost',
                 port:3306,
                 user:'root',
-                password:'',
+                password:'20470',
                 database:'smart_door'
 
             })
@@ -157,9 +157,9 @@ function fetchRoomForUpdate(roomId){
     })
 }
 
-function updateRoom(id, roomName, deviceSn, maxPeopleNumber, currentPeopleNumber){
+function updateRoom(id, roomName, deviceSn, maxPeopleNumber, currentPeopleNumber, door_sound_alarm){
 
-    const query = `UPDATE rooms SET name= '${roomName}', device_sn= '${deviceSn}', max_people_number = ${maxPeopleNumber} , current_people_number = ${currentPeopleNumber} WHERE id = ${id}`;
+    const query = `UPDATE rooms SET name= '${roomName}', device_sn= '${deviceSn}', max_people_number = ${maxPeopleNumber} , current_people_number = ${currentPeopleNumber} ${door_sound_alarm !== undefined? ', door_sound_alarm = ' + door_sound_alarm : ''} WHERE id = ${id}`;
 
     return new Promise ((resolve, reject) => {
         runQuery(query)
@@ -185,7 +185,40 @@ function deleteRoom(roomId){
     })
 }
 
+function setConnected(roomid, connected) {
+    const query = `UPDATE rooms SET connected = ${connected} WHERE id = ${roomid}`
+    return new Promise ((resolve, reject) => {
+        runQuery(query)
+        .then(result =>{
+            resolve(result);
+        }).catch(error =>{
+            reject(error);
+        })
+    })
+}
+function setCurrentNumber(roomid, peopleNum) {
+    const query = `UPDATE rooms SET connected = 1, current_people_number = ${peopleNum} WHERE id = ${roomid}`
+    return new Promise ((resolve, reject) => {
+        runQuery(query)
+        .then(result =>{
+            resolve(result);
+        }).catch(error =>{
+            reject(error);
+        })
+    })
+}
 
+function setAllUnConnected() {
+    const query = `UPDATE rooms SET connected = 0 `
+    return new Promise ((resolve, reject) => {
+        runQuery(query)
+        .then(result =>{
+            resolve(result);
+        }).catch(error =>{
+            reject(error);
+        })
+    })
+}
 
 module.exports = {
     checkUser,
@@ -198,4 +231,7 @@ module.exports = {
     fetchUser,
     fetchUserByID,
     changePassword,
+    setAllUnConnected,
+    setCurrentNumber,
+    setConnected
 }
