@@ -155,30 +155,33 @@ fetchRooms().then(rooms => {
 
     setInterval(() => {
 
-        recursiveCheckConnection()
+        //recursiveCheckConnection()
+        rooms.forEach(room => {
+            checkConnected(room)
+        });
 
         //rooms.length
     }, rooms.length * 1000);
 
-    function recursiveCheckConnection(i) {
-        if(i == undefined){
-            i = 0
-        }
-        if (i < rooms.length){
-            checkConnected(rooms[i], i).then(() => {
-                recursiveCheckConnection(i+1)
-            }).catch(() => {
-                recursiveCheckConnection(i+1)
-            })
-        }
-    }
+    // function recursiveCheckConnection(i) {
+    //     if(i == undefined){
+    //         i = 0
+    //     }
+    //     if (i < rooms.length){
+    //         checkConnected(rooms[i], i).then(() => {
+    //             recursiveCheckConnection(i+1)
+    //         }).catch(() => {
+    //             recursiveCheckConnection(i+1)
+    //         })
+    //     }
+    // }
 
 
-    function checkConnected(device, idx) {
+    function checkConnected(device) {
         //rooms = rooms.map(room => {room.connected = false; return room})
         return new Promise((resolve, reject) => {
             //radio.setWritingPipe(rooms.device_sn)
-            radio.send("hi", 10, device.device_sn).then(() => {
+            radio.checkConnected("hi", 10, device.device_sn).then(() => {
                 setConnected(device.id, true).then(result => {
                     if (rooms[rooms.map(device => device.id).indexOf(device.id)].connected != true) {
                         rooms[rooms.map(device => device.id).indexOf(device.id)].connected = true
